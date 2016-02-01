@@ -4,7 +4,7 @@
   "description": "Simple roguelike game deploye  Node.js and Heroku",
   "main": "index.html",
   "scripts": {
-    "start": "node index.html"
+    "start": "node index.js"
   },
   "dependencies": {
     "ejs": "2.3.3",
