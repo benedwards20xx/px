@@ -7,9 +7,10 @@ app.use(express.static(__dirname + '/public'));
 
 // views is directory for all template files
 app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs');
+app.set('view engine', 'jade');
+//app.set('view engine', 'ejs');
 
-app.engine('.html', require('jade'));
+//app.engine('.html', require('jade'));
 
 app.get('/', function(request, response) {
   response.render('index.html');
