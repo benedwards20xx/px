@@ -9,8 +9,10 @@ app.use(express.static(__dirname + '/public'));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
+app.engine('.html', require('jade'));
+
 app.get('/', function(request, response) {
-  response.render('pages/index');
+  response.render('index.html');
 });
 
 app.listen(app.get('port'), function() {

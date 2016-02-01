@@ -1,7 +1,7 @@
 {
-  "name": "mountainroguelik",
+  "name": "mountainroguelike",
   "version": "0.0.1",
-  "description": "Simple roguelike game deploye  Node.js and Heroku",
+  "description": "Simple roguelike game deployed using Node.js and Heroku",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
