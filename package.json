@@ -2,7 +2,7 @@
   "name": "mountainroguelik",
   "version": "0.0.1",
   "description": "Simple roguelike game deploye  Node.js and Heroku",
-  "main": "index.html",
+  "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
