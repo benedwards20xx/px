@@ -1,0 +1,8 @@
+{
+  "name": "Mountain Roguelike",
+  "description": "Simple roguelike game deploye  Node.js and Heroku",
+  "repository": "https://github.com/benedwards20xx/mountainroguelike",
+  "logo": "http://node-js-sample.herokuapp.com/node.svg",
+  "keywords": ["node", "express", "static"],
+  "image": "heroku/nodejs"
+}

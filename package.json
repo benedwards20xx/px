@@ -1,0 +1,26 @@
+{
+  "name": "mountainroguelik",
+  "version": "0.0.1",
+  "description": "Simple roguelike game deploye  Node.js and Heroku",
+  "main": "index.html",
+  "scripts": {
+    "start": "node index.html"
+  },
+  "dependencies": {
+    "ejs": "2.3.3",
+    "express": "4.13.3"
+  },
+  "engines": {
+    "node": "0.12.7"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/benedwards20xx/mountainroguelike"
+  },
+  "keywords": [
+    "node",
+    "heroku",
+    "express"
+  ],
+  "license": "MIT"
+}
