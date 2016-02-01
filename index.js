@@ -5,8 +5,6 @@ app.set('port', (process.env.PORT || 5000));
 
 app.use(express.static(__dirname + '/app'));
 
-// views is directory for all template files
-//app.set('app', __dirname + '/app');
 app.set('view engine', 'ejs');
 
 app.get('/', function(request, response) {
@@ -16,7 +14,3 @@ app.get('/', function(request, response) {
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
-
-//var app = require('express')();
-//app.use(express.static('app'));
-//app.listen(process.env.PORT);
