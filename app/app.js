@@ -1,14 +1,23 @@
 (function(){
 //TODO:
 //
+// refactor any remaining components to work properly
+// make water work (other obstacles?)
+// update enemy types for levelSetup
+// add health for enemies
+// add start menu
+// add end menu
+// add pause/info menu
+// add info bar
+// update level colors
+// add health items
+// add key item(s)
+// add unlockable exit (last level)
+// add extra controls
+// add mobile playability
 // test all levels
-// add health into enemies
-// change updateSymbol to have x, y instead of y, x
-// work on obstacles
-// add start screen
-// add end/restart screen
-// add items - health, keys, treasure chest
-// a little darker each level? 
+// add a secret two player mode?
+// add secret levels?
 
 /*var wallColors = [
   '#3b3b3b',
@@ -348,11 +357,11 @@ var map = function() {
           break;
         // east
         case 2:
-          col = col + 1 <= numCols ? col + 1 : col;
+          col = col + 1 < numCols ? col + 1 : col;
           break;
         // south
         case 3:
-          row = row + 1 <= numRows ? row + 1 : row;
+          row = row + 1 < numRows ? row + 1 : row;
           break;
         // west
         case 4:
@@ -413,7 +422,8 @@ var map = function() {
         //this.updateColor maybe?
         var curCaveLoc = caveLocs[caveIndex];
         var nextCaveLoc = caveLocs[caveIndex + 1];
-        while (curCaveLoc.col != nextCaveLoc.col || curCaveLoc.row != nextCaveLoc.row) {
+        while (curCaveLoc.col != nextCaveLoc.col ||
+            curCaveLoc.row != nextCaveLoc.row) {
           if (nextCaveLoc.row > curCaveLoc.row) {
             curCaveLoc.row = curCaveLoc.row + 1 <= numRows ? curCaveLoc.row + 1 : curCaveLoc.row; 
           } else if (nextCaveLoc.row < curCaveLoc.row) {
@@ -439,17 +449,23 @@ var map = function() {
         var index = Math.floor((Math.random() * (availablePosList.length -1)));
         if (index >= 0) {
           var randPos = availablePosList[index];
-          var col = randPos.col;
-          var row = randPos.row;
-          var numBlocks = Math.floor((Math.random() * defaultMaxCaveSize/2) + defaultMinCaveSize/2);
+          console.log('randPos: ' + randPos);
+          console.log(randPos);
+          var numBlocks = Math.floor((Math.random() * defaultMaxCaveSize/2) +
+            defaultMinCaveSize/2);
           for (; numBlocks > 0; numBlocks--) {
-            if (this.getMapGridAtPos(col, row) == floorSymbol/* || tempSymbol == waterSymbol*/) {
-              this.updateSymbol(col, row, waterSymbol, levelSetup.getWaterColor());
-              var tile = this.getMapDisplayAtPos(col, row);
+            // console.log('numBlocks: ' + numBlocks);
+            console.log(randPos.col);
+            console.log(randPos.row);
+            if (this.getMapGridAtPos(randPos.col, randPos.row) == floorSymbol/* || tempSymbol == waterSymbol*/) {
+              this.updateSymbol(randPos.col, randPos.row, waterSymbol, levelSetup.getWaterColor());
+              var tile = this.getMapDisplayAtPos(randPos.col, randPos.row);
+              console.log('mapdisplaytile');
+              console.log(tile);
               tile.updateSymbol(waterSymbol);
               tile.updateColor(levelSetup.getWaterColor());
-              randPos = this.seekNextRandomPos(col, row);
             }
+            randPos = this.seekNextRandomPos(randPos.col, randPos.row);
           }
         }
       }
