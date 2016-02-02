@@ -94,6 +94,7 @@ var fontSize = 24;
 
 var floorSymbol  = '.';
 var wallSymbol   = '#';
+var waterSymbol  = '~';
 var playerSymbol = '@';
 var exitSymbol   = '=';
 
@@ -128,6 +129,7 @@ var levelSetup = function() {
     {
       wallColor: '#3b3b3b',
       floorColor: '#aaaaaa',
+      waterColor: '#0000ff',
       backgroundColor: '#ffffff',
       minCaves: defaultMinCaves,
       maxCaves: defaultMaxCaves
@@ -135,6 +137,7 @@ var levelSetup = function() {
     {
       wallColor: '#3b3b3b',
       floorColor: '#999999',
+      waterColor: '#0000ff',
       backgroundColor: '#aaaaaa',
       minCaves: defaultMinCaves,
       maxCaves: defaultMaxCaves
@@ -142,6 +145,7 @@ var levelSetup = function() {
     {
       wallColor: '#3b3b3b',
       floorColor: '#999999',
+      waterColor: '#0000ff',
       backgroundColor: '#aaaaaa',
       minCaves: defaultMinCaves,
       maxCaves: defaultMaxCaves
@@ -149,6 +153,7 @@ var levelSetup = function() {
     {
       wallColor: '#3b3b3b',
       floorColor: '#737373',
+      waterColor: '#0000ff',
       backgroundColor: '#999999',
       minCaves: defaultMinCaves,
       maxCaves: defaultMaxCaves
@@ -156,6 +161,7 @@ var levelSetup = function() {
     {
       wallColor: '#3b3b3b',
       floorColor: '#737373',
+      waterColor: '#0000ff',
       backgroundColor: '#999999',
       minCaves: defaultMinCaves,
       maxCaves: defaultMaxCaves
@@ -174,6 +180,9 @@ var levelSetup = function() {
     },
     getFloorColor: function() {
       return levels[curLevelNum].floorColor;
+    },
+    getWaterColor: function() {
+      return levels[curLevelNum].waterColor;
     },
     getBackgroundColor: function() {
       return levels[curLevelNum].backgroundColor;
@@ -228,6 +237,7 @@ function create() {
   map.initMap();
   map.digMap();
   map.digHallways();
+  map.placeWater();
   //map.resetMap();
 }
 
@@ -285,6 +295,20 @@ var map = function() {
     getHeight: function() {
       return height;
     },
+    getNumCaveLocs: function() {
+      return caveLocs.length;
+    },
+    getAllPosWithSymbol: function(symbol) {
+      var posList = [];
+      for (var row = 0; row < grid.length; row++) {
+        for (var col = 0; col < grid[row].length; col++) {
+          if (grid[row][col] == symbol) {
+            posList.push({col: col, row: row});
+          }
+        }
+      }
+      return posList;
+    },
     //getCavePos: function(num) {
     //  return cavePos[num];
     //},
@@ -316,6 +340,27 @@ var map = function() {
       grid[row] = [];
       display[row] = [];
     },
+    seekNextRandomPos: function(col, row) {
+      switch (Math.floor((Math.random() * 4) + 1)) {
+        // north
+        case 1:
+          row = row - 1 >= 0 ? row - 1 : row;
+          break;
+        // east
+        case 2:
+          col = col + 1 <= numCols ? col + 1 : col;
+          break;
+        // south
+        case 3:
+          row = row + 1 <= numRows ? row + 1 : row;
+          break;
+        // west
+        case 4:
+          col = col - 1 >= 0 ? col - 1 : col;
+          break;
+      }
+      return {col: col, row: row};
+    },
     resetMap: function() {
       grid = [];
       display = [];
@@ -336,7 +381,7 @@ var map = function() {
       }
     },
     digMap: function() {
-      var numCaveDiggers = Math.floor((Math.random() * levelSetup.getMaxCaves()) + levelSetup.getMaxCaves());
+      var numCaveDiggers = Math.floor((Math.random() * levelSetup.getMaxCaves()) + levelSetup.getMinCaves());
       for(var i = 0; i < numCaveDiggers; i++) {       
         var col = Math.floor(Math.random() * (numCols - 1));
         var row = Math.floor(Math.random() * (numRows - 1));
@@ -356,21 +401,9 @@ var map = function() {
     //if (tile !== null) { tile.originalColor = this.caveColor; }
     //tile = map.getMapDisplayAtPos(this.col + 1, this.row);
     //if (tile !== null) { tile.originalColor = this.caveColor; }
-
-          switch (Math.floor((Math.random() * 4) + 1)) {
-            case 1:
-              row = row - 1 >= 0 ? row - 1 : row;
-              break;
-            case 2:
-              col = col + 1 <= numCols ? col + 1 : col;
-              break;
-            case 3:
-              row = row + 1 <= numRows ? row + 1 : row;
-              break;
-            case 4:
-              col = col - 1 >= 0 ? col - 1 : col;
-              break;
-          }
+          var randPos = this.seekNextRandomPos(col, row);
+          col = randPos.col;
+          row = randPos.row;
         }
         caveLocs.push({col: col, row: row});
       }
@@ -394,6 +427,91 @@ var map = function() {
         }
       }
     },
+    placeWater: function() {
+      var numWaterPlacement = Math.floor(Math.random() * map.getNumCaveLocs());
+      var availablePosList = this.getAllPosWithSymbol(floorSymbol);
+      for(var i = 0; i < numWaterPlacement; i++) {
+        //var col = Math.floor(Math.random() * (numCols - 1));
+        //var row = Math.floor(Math.random() * (numRows - 1));
+        //var randPos = this.seekNextRandomPos(col, row);
+        //col = randPos.col;
+        //row = randPos.row;
+        var index = Math.floor((Math.random() * (availablePosList.length -1)));
+        if (index >= 0) {
+          var randPos = availablePosList[index];
+          var col = randPos.col;
+          var row = randPos.row;
+          var numBlocks = Math.floor((Math.random() * defaultMaxCaveSize/2) + defaultMinCaveSize/2);
+          for (; numBlocks > 0; numBlocks--) {
+            if (this.getMapGridAtPos(col, row) == floorSymbol/* || tempSymbol == waterSymbol*/) {
+              this.updateSymbol(col, row, waterSymbol, levelSetup.getWaterColor());
+              var tile = this.getMapDisplayAtPos(col, row);
+              tile.updateSymbol(waterSymbol);
+              tile.updateColor(levelSetup.getWaterColor());
+              randPos = this.seekNextRandomPos(col, row);
+            }
+          }
+        }
+      }
+    },
+        /*for (; numBlocks > 0; numBlocks--) {
+          var tempSymbol = this.getMapGridAtPos(col, row);
+          if (tempSymbol == floorSymbol || tempSymbol == waterSymbol) {
+            this.updateSymbol(col, row, waterSymbol, levelSetup.getWaterColor());
+            var tile = this.getMapDisplayAtPos(col, row);
+            tile.updateSymbol(waterSymbol);
+            tile.updateColor(levelSetup.getWaterColor());
+          }
+        }
+      }*/
+      //var availablePosList = returnPosWithSymbol(floorSymbol);
+     /* var numEnemies = Math.floor((Math.random() * levelSetup.getMaxEnemies()) + levelSetup.getMinEnemies());
+  for (var x = 0; x < numEnemies; x++) {
+    var index = Math.floor((Math.random() * (availablePosList.length - 1)));
+    if (index >= 0) {
+      var pos = availablePosList[index];
+      var enemyTypeIndex = Math.floor(Math.random() * currentLevel.enemyTypes.length);
+      var enemyType = currentLevel.enemyTypes[enemyTypeIndex];
+      var enemy = new Enemy(pos.col, pos.row, enemyType.symbol, enemyType.color);
+      enemies.push(enemy);
+      availablePosList.splice(index, 1);
+    }
+  }*/
+/*Drone.prototype.water = function(index) {
+  var row = this.row;
+  var column = this.column;
+  switch(Math.floor((Math.random() * 4) + 1)) {
+    //north
+    case 1:
+      row-1 >= 0 ? row-=1 : row=row;
+      break;
+    //east
+    case 2:
+      column+1 <= columns ? column+=1 : column=column;
+      break;
+    //south
+    case 3:
+      row+1 <= rows ? row+=1 : row=row;
+      break;
+    //west
+    case 4:
+      column-1 >= 0 ? column-=1 : column=column;
+      break;
+  }
+
+  var temp_symbol = symbolAtPosition(row, column);
+  if(temp_symbol == '.' || temp_symbol == this.mine_symbol)
+  {
+    updateSymbol(this.row, this.column, this.mine_symbol, this.mine_colour);
+    var tile = tileAtPosition(this.row, this.column);
+    tile.original_colour = this.mine_colour;
+    tile.original_symbol = this.mine_symbol;
+    updateSymbol(row,column,this.symbol,this.colour);
+    this.column = column;
+    this.row = row;
+  }
+  this.life--;
+}*/
     /*updateBuildStatus: function(status) {
       buildStatus = status;
     },*/
