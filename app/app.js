@@ -3,6 +3,7 @@
 //
 // refactor any remaining components to work properly
 // make water work (other obstacles?)
+// make water work so it can't obstruct hallways
 // update enemy types for levelSetup
 // add health for enemies
 // add start menu
@@ -11,13 +12,16 @@
 // add info bar
 // update level colors
 // add health items
+// add better health indication?
+// look if camera follow with larger map is possible
 // add key item(s)
 // add unlockable exit (last level)
-// add extra controls
 // add mobile playability
+// add extra controls
 // test all levels
 // add a secret two player mode?
 // add secret levels?
+// add secret see-all mode?
 
 /*var wallColors = [
   '#3b3b3b',
