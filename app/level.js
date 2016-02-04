@@ -50,7 +50,7 @@ var level = function() {
       enemyTypes: [creatures.demon]
     }
   ];
-  var maxLevelNum = levelData.length - 1;
+  var maxLevelNum = 1;//levelData.length - 1;
   return {
     getPlayer: function() {
       return player;
