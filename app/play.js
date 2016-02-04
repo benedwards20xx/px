@@ -67,12 +67,12 @@ var play = {
       pauseMenuText = game.add.text(
         pauseMenuRect.width/2,
         pauseMenuRect.height/2,
-        'Player: ' + playerSymbol + '\n' +
+        'Player:  ' + playerSymbol + '\n' +
         'Enemies: ' + enemyTypeSymbols + '\n' +
-        'Exit: ' + exitSymbol + '\n' +
-        'Floor: ' + floorSymbol + '\n' +
-        'Wall: ' + wallSymbol + '\n' +
-        'Water: ' + waterSymbol + '\n',
+        'Exit:    ' + exitSymbol + '\n' +
+        'Floor:   ' + floorSymbol + '\n' +
+        'Wall:    ' + wallSymbol + '\n' +
+        'Water:   ' + waterSymbol + '\n',
         {
           font: fontSize + 'px ' + font,
           fill: menuFontColor,

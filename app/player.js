@@ -50,12 +50,13 @@ function Player(col, row) {
     if (col >= 0 && col < map.getNumCols() &&
       row >= 0 && row < map.getNumRows())
     var tile = map.getCellAtPos(col, row);
-    if (typeof tile != 'undefined') {
+    if (typeof tile != 'undefined' && tile != null) {
       if(tile.symbol == floorSymbol) {
         map.updateSymbol(this.col, this.row, floorSymbol, tile.originalColor);
         map.updateSymbol(col, row, this.symbol, this.color);
         this.col = col;
         this.row = row;
+        level.moveEnemiesAI();
       } else if (level.isEnemySymbol(tile.symbol)) {
         var enemy = level.updateEnemyHPatPos(col, row, -1);
       } else if (tile.symbol == exitSymbol) {
@@ -69,6 +70,5 @@ function Player(col, row) {
         }
       }
     }
-    level.moveEnemiesAI();
   };
 }

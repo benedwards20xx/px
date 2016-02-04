@@ -21,13 +21,9 @@ function Tile(x, y, symbol, color) {
     {
       this.originalColor = color;
     }
-    
     this.text.setStyle({
       font: fontSize + 'px ' + font,
       fill: this.color
     });
   };
-  this.removeTile = function() {
-    this.text.destroy();
-  }
 }

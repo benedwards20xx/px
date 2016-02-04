@@ -15,6 +15,15 @@ var defaultNumRows = 24;
 var defaultWidth = defaultNumCols * fontSize * 0.6;
 var defaultHeight = defaultNumRows * fontSize + fontSize + 6;
 
+// update object prototype for use
+// Object.size = function(obj) {
+//   var size = 0, key;
+//   for (key in obj) {
+//       if (obj.hasOwnProperty(key)) size++;
+//   }
+//   return size;
+// };
+
 var game = new Phaser.Game(
   defaultWidth,
   defaultHeight,

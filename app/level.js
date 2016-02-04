@@ -71,9 +71,6 @@ var level = function() {
     updatePlayerHP: function(hp) {
       player.updateHP(hp);
     },
-    getEnemies: function() {
-      return enemies;
-    },
     isEnemySymbol: function(symbol) {
       for (var e in levelData[curLevelNum].enemyTypes) {
         if(levelData[curLevelNum].enemyTypes[e].symbol == symbol) {
@@ -81,14 +78,6 @@ var level = function() {
         }
       }
       return false;
-    },
-    getEnemyAtPos: function(col, row) {
-      for (var e in enemies) {
-        if(enemies[e].row == row && enemies[e].col == col) {
-          return enemies[e];
-        }
-      }
-      return null;
     },
     moveEnemiesAI: function() {
       for (var x in enemies) {

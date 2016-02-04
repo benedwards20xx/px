@@ -18,12 +18,13 @@ might not be entirely clear due to attempting to get the main focus of building
 a simple rogue-like finished. 
 
 There are a number of features that I could add in the future.
-  - (add features list)
+  - mobile compatibility
+  - potential algorithm improvements
+  - add more obstacles
+  - add health items
+  - add keys or other item mechanics
+  - make lava (late game water) dangerous
 
 Controls for the game are:
-  - Left Key: Move player left
-  - Up Key: Move player up
-  - Right Key: Move player right
-  - Down Key: Move player down
-  - Spacebar: (TBD)
-
+  - Arrow keys: Move player
+  - Spacebar: Proceed through menus and pause game

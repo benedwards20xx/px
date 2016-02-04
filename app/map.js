@@ -17,9 +17,6 @@ var map = function() {
     getNumRows: function() {
       return numRows;
     },
-    getNumCaveLocs: function() {
-      return caveLocs.length;
-    },
     getAllPosWithSymbol: function(symbol) {
       var posList = [];
       for (var row = 0; row < grid.length; row++) {
@@ -71,9 +68,6 @@ var map = function() {
     },
     getCellAtPos: function(col, row) {
       return grid[row][col];
-    },
-    setCellAtPos: function(col, row, tile) {
-      grid[row][col] = tile;
     },
     seekNextRandomPos: function(col, row) {
       switch (Math.floor((Math.random() * 4) + 1)) {
@@ -153,7 +147,7 @@ var map = function() {
       }
     },
     placeWater: function() {
-      var numWaterPlacement = Math.floor(Math.random() * map.getNumCaveLocs());
+      var numWaterPlacement = Math.floor(Math.random() * caveLocs.length);
       var availablePosList = this.getAllPosWithSymbol(floorSymbol);
       for(var i = 0; i < numWaterPlacement; i++) {
         var index = Math.floor((Math.random() * (availablePosList.length -1)));
