@@ -69,6 +69,7 @@ var play = {
         pauseMenuRect.height/2,
         'Player:  ' + playerSymbol + '\n' +
         'Enemies: ' + enemyTypeSymbols + '\n' +
+        'Food:    ' + foodSymbol + '\n' +
         'Exit:    ' + exitSymbol + '\n' +
         'Floor:   ' + floorSymbol + '\n' +
         'Wall:    ' + wallSymbol + '\n' +

@@ -1,8 +1,11 @@
-Readme file for MountainRoguelike.
+Readme file for Mountain Roguelike.
 
 This game was created by Ben Edwards.
 
 The game is hosted on Heroku at: https://mountainroguelike.herokuapp.com/
+
+If the Heroku app is down or you would like to check out the game locally simply
+clone this repository and open up the index.html.
 
 This was created in an attempt to create a game that generates levels
 procedurally, like a rogue-like. With that in mind I deciced to use text for 
@@ -24,7 +27,12 @@ There are a number of features that I could add in the future.
   - add health items
   - add keys or other item mechanics
   - make lava (late game water) dangerous
+  - make more levels and balance levels a little better
+  - update level looks
 
 Controls for the game are:
   - Arrow keys: Move player
   - Spacebar: Proceed through menus and pause game
+
+This game may  be incompatible with some browsers but was tested using Google 
+Chrome and IE11.

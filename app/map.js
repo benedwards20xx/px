@@ -9,6 +9,9 @@ var map = function() {
   var caveLocs = [];
 
   var exitColor = '#9b3bff';
+  var foodColor = '#00ff00';
+
+  var maxNumFood = 2;
 
   return {
     getNumCols: function() {
@@ -134,15 +137,20 @@ var map = function() {
         while (curCaveLoc.col != nextCaveLoc.col ||
             curCaveLoc.row != nextCaveLoc.row) {
           if (nextCaveLoc.row > curCaveLoc.row) {
-            curCaveLoc.row = curCaveLoc.row + 1 <= numRows ? curCaveLoc.row + 1 : curCaveLoc.row; 
+            curCaveLoc.row = curCaveLoc.row + 1 <= numRows ?
+              curCaveLoc.row + 1 : curCaveLoc.row; 
           } else if (nextCaveLoc.row < curCaveLoc.row) {
-            curCaveLoc.row = curCaveLoc.row - 1 >= 0 ? curCaveLoc.row - 1 : curCaveLoc.row; 
+            curCaveLoc.row = curCaveLoc.row - 1 >= 0 ?
+              curCaveLoc.row - 1 : curCaveLoc.row; 
           } else if (nextCaveLoc.col > curCaveLoc.col) {
-            curCaveLoc.col = curCaveLoc.col + 1 <= numCols ? curCaveLoc.col + 1 : curCaveLoc.col; 
+            curCaveLoc.col = curCaveLoc.col + 1 <= numCols ?
+              curCaveLoc.col + 1 : curCaveLoc.col; 
           } else if (nextCaveLoc.col < curCaveLoc.col) {
-            curCaveLoc.col = curCaveLoc.col - 1 >= 0 ? curCaveLoc.col - 1 : curCaveLoc.col; 
+            curCaveLoc.col = curCaveLoc.col - 1 >= 0 ?
+              curCaveLoc.col - 1 : curCaveLoc.col; 
           }
-          this.updateSymbol(curCaveLoc.col, curCaveLoc.row, floorSymbol, level.getFloorColor());  
+          this.updateSymbol(curCaveLoc.col, curCaveLoc.row,
+            floorSymbol, level.getFloorColor());  
         }
       }
     },
@@ -156,11 +164,15 @@ var map = function() {
           var numBlocks = Math.floor((Math.random() * defaultMaxCaveSize/3) +
             defaultMinCaveSize/3);
           for (; numBlocks > 0; numBlocks--) {
-            if (this.getCellAtPos(randPos.col, randPos.row).symbol == wallSymbol) {
-              this.updateSymbol(randPos.col, randPos.row, waterSymbol, level.getWaterColor());
+            if (this.getCellAtPos(randPos.col, randPos.row).symbol ==
+              wallSymbol)
+            {
+              this.updateSymbol(randPos.col, randPos.row,
+                waterSymbol, level.getWaterColor());
             }
             else if (this.canReplaceFloorAtPos(randPos.col, randPos.row)) {
-              this.updateSymbol(randPos.col, randPos.row, waterSymbol, level.getWaterColor());
+              this.updateSymbol(randPos.col, randPos.row,
+                waterSymbol, level.getWaterColor());
             }
             availablePosList.splice(index, 1);
             randPos = this.seekNextRandomPos(randPos.col, randPos.row);
@@ -171,19 +183,34 @@ var map = function() {
     populate: function() {
       var availablePosList = this.getAllPosWithSymbol(floorSymbol);
       // populate enemies
-      var numEnemies = Math.floor((Math.random() * level.getMaxEnemies()) + level.getMinEnemies());
+      var numEnemies = Math.floor((Math.random() *
+        level.getMaxEnemies()) + level.getMinEnemies());
       for (var x = 0; x < numEnemies; x++) {
-        var index = Math.floor((Math.random() * (availablePosList.length - 1)));
-        if (index >= 0) {
-          var pos = availablePosList[index];
+        var enemyIndex = Math.floor((Math.random() *
+          (availablePosList.length - 1)));
+        if (enemyIndex >= 0) {
+          var enemyPos = availablePosList[enemyIndex];
           var enemyTypes = level.getEnemyTypes();
           var enemyTypeIndex = Math.floor(Math.random() * enemyTypes.length);
           var enemyType = enemyTypes[enemyTypeIndex];
-          var enemy = new Enemy(pos.col, pos.row, enemyType.symbol, enemyType.color);
+          var enemy = new Enemy(enemyPos.col, enemyPos.row,
+            enemyType.symbol, enemyType.color);
           level.addEnemy(enemy);
-          availablePosList.splice(index, 1);
+          availablePosList.splice(enemyIndex, 1);
         }
       }
+      // place food
+      var numFood = Math.floor(Math.random() * 2) + 1;
+      console.log('nfood ' + numFood);
+      for (var x = 0; x < numFood; x++) {
+        var foodIndex = Math.floor((Math.random() *
+          (availablePosList.length - 1)));
+        if (foodIndex >= 0) {
+          var foodPos = availablePosList[foodIndex];
+          map.updateSymbol(foodPos.col, foodPos.row, foodSymbol, foodColor);
+          availablePosList.splice(foodIndex, 1);
+        }
+      };
       // place player
       var playerIndex = Math.floor((Math.random() * (availablePosList.length - 1)));
       var playerPos = availablePosList[playerIndex];

@@ -51,11 +51,13 @@ function Player(col, row) {
       row >= 0 && row < map.getNumRows())
     var tile = map.getCellAtPos(col, row);
     if (typeof tile != 'undefined' && tile != null) {
-      if(tile.symbol == floorSymbol) {
+      if (tile.symbol == floorSymbol || tile.symbol == foodSymbol) {
         map.updateSymbol(this.col, this.row, floorSymbol, tile.originalColor);
         map.updateSymbol(col, row, this.symbol, this.color);
         this.col = col;
         this.row = row;
+        if (tile.symbol == foodSymbol)
+          this.updateHP(1);
         level.moveEnemiesAI();
       } else if (level.isEnemySymbol(tile.symbol)) {
         var enemy = level.updateEnemyHPatPos(col, row, -1);

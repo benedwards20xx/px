@@ -91,7 +91,6 @@ var level = function() {
       for (var x = 0; x < enemies.length; x++) {
         if(enemies[x].col == col && enemies[x].row == row) {
           enemies.splice(x, 1);
-          //delete enemies[x];
         }
       }
     },
