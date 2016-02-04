@@ -1,13 +1,10 @@
 //TODO:
 //
-// refactor any remaining components to work properly
-// make water work (other obstacles?)
-// make water work so it can't obstruct hallways
-// update enemy types for level
+// restructure files
 // add start menu
 // add end menu
-// can take out grid in map?
-
+// add pause/info menu
+// remake components using objects instead of arrays (enemies, etc.)
 // look for places to update loops/deletion
 // *** SEE BELOW ***
 // var s = new Object();
@@ -16,10 +13,15 @@
 // console.log(s[3]); <- 'bs'
 // delete s[3];
 // console.log(s[3]); <- undefined
-
-// add pause/info menu
+// Object.size = function(obj) {
+//     var size = 0, key;
+//     for (key in obj) {
+//         if (obj.hasOwnProperty(key)) size++;
+//     }
+//     return size;
+// };
+//
 // add info bar
-// update level colors
 // add health for enemies 
 // add health items
 // add better health indication?
@@ -33,14 +35,17 @@
 // add secret levels?
 // add secret see-all mode?
 
+/*Object.size = function(obj) {
+    var size = 0, key;
+    for (key in obj) {
+        if (obj.hasOwnProperty(key)) size++;
+    }
+    return size;
+};*/
 
 //var wolf = {symbol: 'w', color: '#3b3b3b', health: 1};
-var creatures = {
-  spider: { symbol: 's', color: '#663300', health: 1 },
-  bat: { symbol: 'b', color: '#003399', health: 1 },
-  zombie: { symbol: 'z', color: '#66ff66', health: 2 },
-  demon: { symbol: 'd', color: '#ff0000', health: 3 }
-};
+// health removed
+
   // spider: 
 // ];
 // var spider = {symbol: 's', color: '#663300', health: 1};
@@ -48,25 +53,25 @@ var creatures = {
 // var zombie = {symbol: 'z', color: '#33cc33', health: 2};
 // var demon = {symbol: 'd', color: '#ff0000', health: 3};
 
-/*var apple = {symbol: 'a', color: '#ff0000'};
-var key = {symbol: 'k', color: '#ffff00'};
-var chest = {symbol: 'c', color: '#ffff00'};
+// var apple = {symbol: 'a', color: '#ff0000'};
+// var key = {symbol: 'k', color: '#ffff00'};
+// var chest = {symbol: 'c', color: '#ffff00'};
 
-var itemTypes = [
-  [apple],
-  [apple, key],
-  [apple, key],
-  [apple],
-  [chest]
-]*/
+//var itemTypes = [
+//   [apple],
+//   [apple, key],
+//   [apple, key],
+//   [apple],
+//   [chest]
+// ]
 
-/*var startLevelDescriptions = [
-  'You are on top of a snow covered mountain, looking for a way in.',
-  'You have entered the mountain, but must go deeper.',
-  'You venture deeper, hearing groans from the undead.',
-  'You venture deeper, feeling the heat from the lava inside the mountain.',
-  'You venture into what seems like a dimension of the underworld.',
-];*/
+// var startLevelDescriptions = [
+//   'You are on top of a snow covered mountain, looking for a way in.',
+//   'You have entered the mountain, but must go deeper.',
+//   'You venture deeper, hearing groans from the undead.',
+//   'You venture deeper, feeling the heat from the lava inside the mountain.',
+//   'You venture into what seems like a dimension of the underworld.',
+// ];
 
 // var maxLevelNum = 5;
 var defaultMaxHp = 5;
@@ -97,7 +102,7 @@ var canvasId = 'container';
 var defaultMinCaveSize = 20;
 var defaultMaxCaveSize = 80;
 
-var level = function() {
+/*var level = function() {
   var player;
   var enemies = [];
   var curLevelNum = 0;
@@ -142,7 +147,7 @@ var level = function() {
       enemyTypes: [creatures.demon]
     }
   ];
-  var maxLevelNum = levelData.length;
+  var maxLevelNum = levelData.length - 1;
   return {
     getPlayer: function() {
       return player;
@@ -202,9 +207,10 @@ var level = function() {
       return curLevelNum;
     },
     updateLevelNum: function(num) {
-      curLevelNum = num > maxLevelNum ? maxLevelNum : num;
+      curLevelNum = num >= maxLevelNum ? maxLevelNum : num;
     },
     getMaxLevelNum: function() {
+      console.log('maxLevelNum ' + maxLevelNum);
       return maxLevelNum;
     },
     getWallColor: function() {
@@ -244,28 +250,9 @@ var level = function() {
       map.populate();
     }
   };
-}();
-
-/*var menu = function() {
-  var menuFontSize = 32;
-  var menuFontColor = '#ffffff';
-  var startText = 'Press Spacebar to Start';
-  return {
-    setupStartMenu: function() {
-      game.stage.backgroundColor = menuBackgroundColor;
-      game.add.text(
-        game.width/2,
-        game.height/2,
-        startText,
-        {
-          font: menuFontSize + 'px ' + font,
-          fill: menuFontColor
-        }
-      );
-    }
-  };
 }();*/
 
+/*
 var map = function() {
   var numCols = 48;
   var numRows = 24;
@@ -370,14 +357,14 @@ var map = function() {
       return {col: col, row: row};
     },
     reset: function() {
-      /*if (grid) {
-        for (var row = 0; row < numCols; row++) {
-          grid[row] = [];  
-          for (var col = 0; col < numCols; col++) {
-            grid[row][col] = null;
-          }
-        }
-      }*/
+      // if (grid) {
+      //   for (var row = 0; row < numCols; row++) {
+      //     grid[row] = [];  
+      //     for (var col = 0; col < numCols; col++) {
+      //       grid[row][col] = null;
+      //     }
+      //   }
+      // }
       //grid = [];
       //display = [];
       //caveLocs = [];
@@ -529,17 +516,23 @@ var map = function() {
       this.updateSymbol(col + 1, row, symbol, color);
     }
   };
-}();
+}();*/
 
+
+// console.log( 'attempt ' + s);
 var game = new Phaser.Game(
   defaultWidth,
   defaultHeight,
   Phaser.AUTO,
   canvasId,
-  {
-    create: create
-  }
+  { create: create }
 );
+
+// game.state.add('Menu', Menu);
+
+// game.state.add('Game', Game);
+
+// game.state.start('Menu');
 
 function create() {
   //$('#container').css('width', canvasWidth + 'px');
@@ -558,10 +551,10 @@ function create() {
 
   //menu.setupStartMenu();
 
-  /*var infoGraphics = game.add.graphics();
-  infoGraphics.lineStyle(2, 0x000000, 1);
-  infoGraphics.beginFill(0x000000, 1);
-  infoGraphics.drawRect(0, mapHeight, canvasWidth, canvasHeight);*/
+  // var infoGraphics = game.add.graphics();
+  // infoGraphics.lineStyle(2, 0x000000, 1);
+  // infoGraphics.beginFill(0x000000, 1);
+  // infoGraphics.drawRect(0, mapHeight, canvasWidth, canvasHeight);
 
   level.startNewLevel();
 }
@@ -640,26 +633,26 @@ function Player(col, row) {
   this.maxHp = defaultMaxHp;
   this.hp = this.maxHp;
   this.symbol = playerSymbol;
-  /*this.hpText = game.add.text(
-    0,
-    mapHeight,
-    'HP: ' + this.hp + '/' + this.maxHp,
-    {
-      font: mapFontSize + 'px ' + mapFont,
-      fill: '#fff',
-      align: 'left'
-    }
-  );
-  this.descriptionText = game.add.text(
-    0,
-    mapHeight + mapFontSize,
-    '',
-    {
-      font: mapFontSize + 'px ' + mapFont,
-      fill: '#fff',
-      align: 'left'
-    }
-  );*/
+  // this.hpText = game.add.text(
+  //   0,
+  //   mapHeight,
+  //   'HP: ' + this.hp + '/' + this.maxHp,
+  //   {
+  //     font: mapFontSize + 'px ' + mapFont,
+  //     fill: '#fff',
+  //     align: 'left'
+  //   }
+  // );
+  // this.descriptionText = game.add.text(
+  //   0,
+  //   mapHeight + mapFontSize,
+  //   '',
+  //   {
+  //     font: mapFontSize + 'px ' + mapFont,
+  //     fill: '#fff',
+  //     align: 'left'
+  //   }
+  // );
   map.updateSymbol(col, row, playerSymbol, this.color);
   this.updateHP = function(hp) {
     if (this.hp + hp <= this.maxHp) {
@@ -689,7 +682,7 @@ function Player(col, row) {
         // enemy.updateHP(-1);
       } else if (tile.symbol == exitSymbol) {
         var curLevelNum = level.getLevelNum();
-        // console.log('curLevelNum ' + curLevelNum);
+        //console.log('curLevelNum ' + curLevelNum);
         if (curLevelNum < level.getMaxLevelNum()) {
           level.updateLevelNum(curLevelNum + 1);
           level.startNewLevel();
@@ -700,9 +693,9 @@ function Player(col, row) {
     }
     level.moveEnemiesAI();
   };
-  /*this.updateHpText = function() {
-    this.hpText.setText('HP: ' + this.hp + '/' + this.maxHp);
-  };*/
+  // this.updateHpText = function() {
+  //   this.hpText.setText('HP: ' + this.hp + '/' + this.maxHp);
+  // };
 }
 
 function Enemy(col, row, symbol, color) {
