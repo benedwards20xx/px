@@ -3,7 +3,7 @@ function Enemy(col, row, symbol, color) {
   this.row = row;
   this.symbol = symbol;
   this.color = color;
-  this.hp = defaultEnemyHp;
+  this.hp = 1;
   map.updateSymbol(this.col, this.row, symbol, color);
   this.updatePosition = function(col, row) {
     if (map.getCellAtPos(col, row).symbol == floorSymbol) {
@@ -22,7 +22,7 @@ function Enemy(col, row, symbol, color) {
     var dy = player.row - this.row;
 
     // if far from player, move randomly
-    if (Math.abs(dx) + Math.abs(dy) > randomMoveDif) {
+    if (Math.abs(dx) + Math.abs(dy) > 6) {
       var randPos = map.seekNextRandomPos(this.col, this.row);
       this.updatePosition(randPos.col, randPos.row);  
     } else {

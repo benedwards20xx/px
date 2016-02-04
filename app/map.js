@@ -2,8 +2,13 @@ var map = function() {
   var numCols = 48;
   var numRows = 24;
 
+  var defaultMinCaveSize = 20;
+  var defaultMaxCaveSize = 80;
+
   var grid = [];
   var caveLocs = [];
+
+  var exitColor = '#9b3bff';
 
   return {
     getNumCols: function() {
@@ -67,19 +72,9 @@ var map = function() {
     getCellAtPos: function(col, row) {
       return grid[row][col];
     },
-    //getMapDisplayAtPos: function(col, row) {
-    //  return display[row][col];
-    //},
     setCellAtPos: function(col, row, tile) {
       grid[row][col] = tile;
     },
-    //setMapDisplayAtPos: function(col, row, symbol) {
-    //  display[row][col] = symbol;
-    //},
-    //initMapRow: function(row) {
-    //  grid[row] = [];
-      //display[row] = [];
-    //},
     seekNextRandomPos: function(col, row) {
       switch (Math.floor((Math.random() * 4) + 1)) {
         // north
@@ -101,54 +96,23 @@ var map = function() {
       }
       return {col: col, row: row};
     },
-    reset: function() {
-      // if (grid) {
-      //   for (var row = 0; row < numCols; row++) {
-      //     grid[row] = [];  
-      //     for (var col = 0; col < numCols; col++) {
-      //       grid[row][col] = null;
-      //     }
-      //   }
-      // }
-      //grid = [];
-      //display = [];
-      //caveLocs = [];
-    },
-    clear: function() {
-      for (var row = 0; row < numRows; row++) {
-        if (grid[row]) {
-          for (var col = 0; col < numCols; col++) {
-            if (grid[row][col]) {
-              grid[row][col].removeTile();
-            }
-          }
-        }
-      }
-    },
     init: function() {
       game.stage.backgroundColor = level.getBackgroundColor();
+      if(level.getLevelNum() == 0)
+        grid = [];
       caveLocs = [];
       for (var row = 0; row < numRows; row++) {
-        if (grid[row]) {
+        if (typeof grid[row] != 'undefined' || grid[row] != null) {
           for (var col = 0; col < numCols; col++) {
-            if (grid[row][col]) {
+            if (typeof grid[row][col] != 'undefined' || grid[row][col] != null) {
               grid[row][col].updateTile(wallSymbol, level.getWallColor());
             }
           }
         } else {
           grid[row] = [];
-          // this.initMapRow(row);
           for (var col = 0; col < numCols; col++) {
-            //if (grid[row][col]) {
-            //  console.log('uh');
-            //  grid[row][col].updateTile(wallSymbol, level.getWallColor());
-            //} else {
-            //  console.log('huh');
-              var tile = new Tile(col, row, wallSymbol, level.getWallColor());
-              grid[row][col] =  tile;  
-            //}
-            
-            //grid[row][col] = wallSymbol;
+            var tile = new Tile(col, row, wallSymbol, level.getWallColor());
+            grid[row][col] =  tile;  
           }
         }
       }
@@ -218,8 +182,6 @@ var map = function() {
         var index = Math.floor((Math.random() * (availablePosList.length - 1)));
         if (index >= 0) {
           var pos = availablePosList[index];
-          // console.log('level.getEnemyTypes()');
-          // console.log(level.getEnemyTypes());
           var enemyTypes = level.getEnemyTypes();
           var enemyTypeIndex = Math.floor(Math.random() * enemyTypes.length);
           var enemyType = enemyTypes[enemyTypeIndex];
@@ -232,7 +194,7 @@ var map = function() {
       var playerIndex = Math.floor((Math.random() * (availablePosList.length - 1)));
       var playerPos = availablePosList[playerIndex];
       var player = level.getPlayer();
-      if (player) {
+      if (typeof player != 'undefined' && player != null) {
         player.updatePosition(playerPos.col, playerPos.row);
       } else {
         level.initPlayerAtPos(playerPos.col, playerPos.row);
@@ -248,8 +210,6 @@ var map = function() {
         color = level.getFloorColor(currentLevelNum);
       }
       if (grid[row] && grid[row][col]) {
-        //display[row][col].updateTile(symbol, color);
-        //grid[row][col] = symbol;
         grid[row][col].updateTile(symbol, color);
       }
     },

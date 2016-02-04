@@ -2,7 +2,8 @@ var creatures = {
   spider: { symbol: 's', color: '#663300' },
   bat: { symbol: 'b', color: '#003399' },
   zombie: { symbol: 'z', color: '#66ff66' },
-  demon: { symbol: 'd', color: '#ff0000' }
+  demon: { symbol: 'd', color: '#ff0000' },
+  blueSlime: { symbol: 'o', color: '#0000ff' }
 };
 
 var level = function() {
@@ -13,14 +14,16 @@ var level = function() {
   var defaultMaxCaves = 5;
   var defaultMinEnemies = 3;
   var defaultMaxEnemies = 7;
+  var gameOverReason = '';
   var levelData = [
     {
       wallColor: '#3b3b3b',
       floorColor: '#d9d9d9',
       waterColor: '#0099ff',
       backgroundColor: '#ffffff',
-      enemyTypes: [creatures.spider]
-    },
+      enemyTypes: [creatures.spider, creatures.blueSlime]
+    }
+    ,
     {
       wallColor: '#3b3b3b',
       floorColor: '#b3b3b3',
@@ -40,26 +43,30 @@ var level = function() {
       floorColor: '#666666',
       waterColor: '#ff6600',
       backgroundColor: '#8c8c8c',
-      enemyTypes: [creatures.zombie]
+      enemyTypes: [creatures.zombie, creatures.blueSlime]
     },
     {
       wallColor: '#3b3b3b',
       floorColor: '#404040',
       waterColor: '#ff6600',
       backgroundColor: '#666666',
-      enemyTypes: [creatures.demon]
+      enemyTypes: [creatures.demon, creatures.zombie]
     }
   ];
-  var maxLevelNum = 1;//levelData.length - 1;
+  var maxLevelNum = levelData.length - 1;
   return {
+    clearPlayer: function() {
+      player = null;
+    },
     getPlayer: function() {
       return player;
     },
     initPlayerAtPos: function(col, row) {
-      if (player) {
+      if (typeof player != 'undefined' && player != null) {
         player.updateSymbol(col, row, player.symbol, player.color);
-      }
-      player = new Player(col, row);
+      } else {
+        player = new Player(col, row);
+      } 
     },
     updatePlayerHP: function(hp) {
       player.updateHP(hp);
@@ -113,7 +120,6 @@ var level = function() {
       curLevelNum = num >= maxLevelNum ? maxLevelNum : num;
     },
     getMaxLevelNum: function() {
-      console.log('maxLevelNum ' + maxLevelNum);
       return maxLevelNum;
     },
     getWallColor: function() {
@@ -145,12 +151,17 @@ var level = function() {
     },
     startNewLevel: function() {
       enemies = [];
-      //map.reset();
       map.init();
       map.digMap();
       map.placeWater();
       map.digHallways();
       map.populate();
+    },
+    getGameOverReason: function() {
+      return gameOverReason;
+    },
+    updateGameOverReason: function(reason) {
+      gameOverReason = reason;
     }
   };
 }();

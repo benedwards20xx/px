@@ -1,5 +1,4 @@
 function Tile(x, y, symbol, color) {
-  //this.originalSymbol = symbol;
   this.symbol = symbol;
   this.originalColor = color;
   this.color = color;
