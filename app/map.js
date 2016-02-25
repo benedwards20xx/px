@@ -201,7 +201,6 @@ var map = function() {
       }
       // place food
       var numFood = Math.floor(Math.random() * 2) + 1;
-      console.log('nfood ' + numFood);
       for (var x = 0; x < numFood; x++) {
         var foodIndex = Math.floor((Math.random() *
           (availablePosList.length - 1)));

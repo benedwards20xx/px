@@ -52,16 +52,17 @@ function Player(col, row) {
     var tile = map.getCellAtPos(col, row);
     if (typeof tile != 'undefined' && tile != null) {
       if (tile.symbol == floorSymbol || tile.symbol == foodSymbol) {
+        if (tile.symbol === foodSymbol) {
+          this.updateHP(1);
+        }
         map.updateSymbol(this.col, this.row, floorSymbol, tile.originalColor);
         map.updateSymbol(col, row, this.symbol, this.color);
         this.col = col;
         this.row = row;
-        if (tile.symbol == foodSymbol)
-          this.updateHP(1);
         level.moveEnemiesAI();
       } else if (level.isEnemySymbol(tile.symbol)) {
         var enemy = level.updateEnemyHPatPos(col, row, -1);
-      } else if (tile.symbol == exitSymbol) {
+      } else if (tile.symbol === exitSymbol) {
         var curLevelNum = level.getLevelNum();
         if (curLevelNum < level.getMaxLevelNum()) {
           level.updateLevelNum(curLevelNum + 1);
