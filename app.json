@@ -1,7 +1,7 @@
 {
-  "name": "Mountain Roguelike",
-  "description": "Simple roguelike game deployed using Node.js and Heroku",
-  "repository": "https://github.com/benedwards20xx/mountainroguelike",
+  "name": "PX",
+  "description": "PX",
+  "repository": "https://github.com/benedwards20xx/px",
   "logo": "http://node-js-sample.herokuapp.com/node.svg",
   "keywords": ["node", "express", "static"],
   "image": "heroku/nodejs"
