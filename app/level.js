@@ -7,6 +7,7 @@
 // };
 
 var level = function() {
+  var curLevelNum = 0;
   var levelData = [
     {
       // numRows: 3,
@@ -27,11 +28,17 @@ var level = function() {
     }
   ];
   return {
+    getBackgroundColor: function() {
+      return levelData[curLevelNum].backgroundColor;
+    },
     getEmptyCellColor: function() {
       return levelData[curLevelNum].emptyCellColor;
     },
     getFilledCellColor: function() {
       return levelData[curLevelNum].floorColor;
+    },
+    getLevelNum: function() {
+      return curLevelNum;
     },
     startNewLevel: function() {
       grid.init();
@@ -43,7 +50,7 @@ var level = function() {
   };
   // var player;
   // var enemies = [];
-  // var curLevelNum = 0;
+  // 
   // var defaultMinCaves = 3;
   // var defaultMaxCaves = 5;
   // var defaultMinEnemies = 3;
@@ -135,9 +142,7 @@ var level = function() {
   //       }
   //     }
   //   },
-  //   getLevelNum: function() {
-  //     return curLevelNum;
-  //   },
+  //   
   //   updateLevelNum: function(num) {
   //     curLevelNum = num >= maxLevelNum ? maxLevelNum : num;
   //   },

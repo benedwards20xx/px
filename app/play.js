@@ -18,10 +18,10 @@ var play = {
     // spacebar.onDown.add(this.pausePlay, this);
 
     //insert bottom info bar
-    var infoBar = game.add.graphics();
-    infoBar.lineStyle(2, 0x000000, 1);
-    infoBar.beginFill(0x000000, 1);
-    infoBar.drawRect(0, game.height - fontSize - 2, game.width, game.height);
+    // var infoBar = game.add.graphics();
+    // infoBar.lineStyle(2, 0x000000, 1);
+    // infoBar.beginFill(0x000000, 1);
+    // infoBar.drawRect(0, game.height - fontSize - 2, game.width, game.height);
 
     // var controlsText = game.add.text(
     //   game.width/2 + fontSize,

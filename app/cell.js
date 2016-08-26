@@ -2,8 +2,18 @@ function Cell(col, row, color) {
   // this.symbol = symbol;
   this.originalColor = color;
   this.color = color;
-  this.row = row;
+  
   this.col = col;
+  this.row = row;
+
+  // this.rect = Phaser.Graphics.drawRoundedRect(
+  //   x:
+  //   y:
+  //   w:
+  //   h:
+  //   rad:
+  // );
+
   // this.text = game.add.text(
   //   fontSize * 0.6 * x,
   //   fontSize * y,

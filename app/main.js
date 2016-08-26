@@ -1,5 +1,5 @@
-var font = 'monospace';
-var fontSize = 24;
+// var font = 'monospace';
+// var fontSize = 24;
 
 // var floorSymbol  = '.';
 // var wallSymbol   = '#';
@@ -8,13 +8,21 @@ var fontSize = 24;
 // var exitSymbol   = '=';
 // var foodSymbol   = '%';
 
+var emptyCell = '';
+
 var menuBackgroundColor = '#000000';
 var menuFontColor = '#ffffff';
 
 var defaultNumCols = 3;
 var defaultNumRows = 3;
-var defaultWidth = defaultNumCols * fontSize * 0.6;
-var defaultHeight = defaultNumRows * fontSize + fontSize + 6;
+
+var defaultBoxDim = 50;
+
+var defaultWidth = defaultNumCols * defaultBoxDim;
+var defaultHeight = defaultNumRows * defaultBoxDim;
+
+console.log("dW: " + defaultWidth);
+console.log("dH: " + defaultHeight);
 
 var game = new Phaser.Game(
   defaultWidth,
