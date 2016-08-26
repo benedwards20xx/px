@@ -1,17 +1,8 @@
-var map = function() {
-  var numCols = 48;
-  var numRows = 24;
+var grid = function() {
+  var numCols = 3;
+  var numRows = 3;
 
-  var defaultMinCaveSize = 20;
-  var defaultMaxCaveSize = 80;
-
-  var grid = [];
-  var caveLocs = [];
-
-  var exitColor = '#9b3bff';
-  var foodColor = '#00ff00';
-
-  var maxNumFood = 2;
+  var gridLayout = [];
 
   return {
     getNumCols: function() {
@@ -20,100 +11,103 @@ var map = function() {
     getNumRows: function() {
       return numRows;
     },
-    getAllPosWithSymbol: function(symbol) {
-      var posList = [];
-      for (var row = 0; row < grid.length; row++) {
-        for (var col = 0; col < grid[row].length; col++) {
-          if (grid[row][col].symbol == symbol) {
-            posList.push({col: col, row: row});
-          }
-        }
-      }
-      return posList;
-    },
-    isSymbolObstacleAtPos: function(col, row) {
-      return grid[row][col].symbol != floorSymbol;
-    },
-    canReplaceFloorAtPos: function(col, row) {
-      if (col - 1 >= 0 &&
-        col + 1 < numCols &&
-        row - 1 >= 0 &&
-        row + 1 < numRows)
-      {
-        // north
-        if (this.isSymbolObstacleAtPos(col, row - 1))
-          return false;
-        // north-east
-        if (this.isSymbolObstacleAtPos(col + 1, row - 1))
-          return false;
-        // east
-        if (this.isSymbolObstacleAtPos(col + 1, row))
-          return false;
-        // south-east
-        if (this.isSymbolObstacleAtPos(col + 1, row + 1))
-          return false;
-        // south
-        if (this.isSymbolObstacleAtPos(col, row + 1))
-          return false;
-        // south-west
-        if (this.isSymbolObstacleAtPos(col - 1, row + 1))
-          return false;
-        // west
-        if (this.isSymbolObstacleAtPos(col - 1, row))
-          return false;
-        // north-west
-        if (this.isSymbolObstacleAtPos(col - 1, row - 1))
-          return false;
-        return true;
-      } else {
-        return false;
-      }
+    canPlaceMarkerAtPos: function(col, row) {
+
     },
     getCellAtPos: function(col, row) {
-      return grid[row][col];
-    },
-    seekNextRandomPos: function(col, row) {
-      switch (Math.floor((Math.random() * 4) + 1)) {
-        // north
-        case 1:
-          row = row - 1 >= 0 ? row - 1 : row;
-          break;
-        // east
-        case 2:
-          col = col + 1 < numCols ? col + 1 : col;
-          break;
-        // south
-        case 3:
-          row = row + 1 < numRows ? row + 1 : row;
-          break;
-        // west
-        case 4:
-          col = col - 1 >= 0 ? col - 1 : col;
-          break;
-      }
-      return {col: col, row: row};
+      return gridLayout[row][col];
     },
     init: function() {
       game.stage.backgroundColor = level.getBackgroundColor();
       if(level.getLevelNum() == 0)
-        grid = [];
-      caveLocs = [];
+        gridLayout = [];
       for (var row = 0; row < numRows; row++) {
-        if (typeof grid[row] != 'undefined' || grid[row] != null) {
+        if (typeof gridLayout[row] != 'undefined' || gridLayout[row] != null) {
           for (var col = 0; col < numCols; col++) {
-            if (typeof grid[row][col] != 'undefined' || grid[row][col] != null) {
-              grid[row][col].updateTile(wallSymbol, level.getWallColor());
+            if (typeof gridLayout[row][col] != 'undefined' || gridLayout[row][col] != null) {
+              gridLayout[row][col].updateCell(emptyCell, level.getEmptyCellColor());
             }
           }
         } else {
-          grid[row] = [];
+          gridLayout[row] = [];
           for (var col = 0; col < numCols; col++) {
-            var tile = new Tile(col, row, wallSymbol, level.getWallColor());
-            grid[row][col] =  tile;  
+            var cell = new Cell(col, row, emptyCell, level.getEmptyCellColor());
+            gridLayout[row][col] =  cell;  
           }
         }
       }
     },
+
+    // getAllPosWithSymbol: function(symbol) {
+    //   var posList = [];
+    //   for (var row = 0; row < grid.length; row++) {
+    //     for (var col = 0; col < grid[row].length; col++) {
+    //       if (grid[row][col].symbol == symbol) {
+    //         posList.push({col: col, row: row});
+    //       }
+    //     }
+    //   }
+    //   return posList;
+    // },
+    // isSymbolObstacleAtPos: function(col, row) {
+    //   return grid[row][col].symbol != floorSymbol;
+    // },
+    // canReplaceFloorAtPos: function(col, row) {
+    //   if (col - 1 >= 0 &&
+    //     col + 1 < numCols &&
+    //     row - 1 >= 0 &&
+    //     row + 1 < numRows)
+    //   {
+    //     // north
+    //     if (this.isSymbolObstacleAtPos(col, row - 1))
+    //       return false;
+    //     // north-east
+    //     if (this.isSymbolObstacleAtPos(col + 1, row - 1))
+    //       return false;
+    //     // east
+    //     if (this.isSymbolObstacleAtPos(col + 1, row))
+    //       return false;
+    //     // south-east
+    //     if (this.isSymbolObstacleAtPos(col + 1, row + 1))
+    //       return false;
+    //     // south
+    //     if (this.isSymbolObstacleAtPos(col, row + 1))
+    //       return false;
+    //     // south-west
+    //     if (this.isSymbolObstacleAtPos(col - 1, row + 1))
+    //       return false;
+    //     // west
+    //     if (this.isSymbolObstacleAtPos(col - 1, row))
+    //       return false;
+    //     // north-west
+    //     if (this.isSymbolObstacleAtPos(col - 1, row - 1))
+    //       return false;
+    //     return true;
+    //   } else {
+    //     return false;
+    //   }
+    // },
+    // seekNextRandomPos: function(col, row) {
+    //   switch (Math.floor((Math.random() * 4) + 1)) {
+    //     // north
+    //     case 1:
+    //       row = row - 1 >= 0 ? row - 1 : row;
+    //       break;
+    //     // east
+    //     case 2:
+    //       col = col + 1 < numCols ? col + 1 : col;
+    //       break;
+    //     // south
+    //     case 3:
+    //       row = row + 1 < numRows ? row + 1 : row;
+    //       break;
+    //     // west
+    //     case 4:
+    //       col = col - 1 >= 0 ? col - 1 : col;
+    //       break;
+    //   }
+    //   return {col: col, row: row};
+    // },
     digMap: function() {
       var numCaveDiggers = Math.floor((Math.random() * level.getMaxCaves()) + level.getMinCaves());
       for(var i = 0; i < numCaveDiggers; i++) {       

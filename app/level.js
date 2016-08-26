@@ -20,9 +20,27 @@ var level = function() {
         [0],
         [1],
         [0]
-      ]
+      ],
+      backgroundColor: '#ffffff',
+      emptyCellColor: '#000000',
+      filledCellColor: '#777777'
     }
   ];
+  return {
+    getEmptyCellColor: function() {
+      return levelData[curLevelNum].emptyCellColor;
+    },
+    getFilledCellColor: function() {
+      return levelData[curLevelNum].floorColor;
+    },
+    startNewLevel: function() {
+      grid.init();
+      // map.digMap();
+      // map.placeWater();
+      // map.digHallways();
+      // map.populate();
+    }
+  };
   // var player;
   // var enemies = [];
   // var curLevelNum = 0;
@@ -152,14 +170,6 @@ var level = function() {
   //   },
   //   getMaxEnemies: function() {
   //     return defaultMaxEnemies + curLevelNum;
-  //   },
-  //   startNewLevel: function() {
-  //     enemies = [];
-  //     map.init();
-  //     map.digMap();
-  //     map.placeWater();
-  //     map.digHallways();
-  //     map.populate();
   //   },
   //   getGameOverReason: function() {
   //     return gameOverReason;
