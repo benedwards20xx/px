@@ -1,3 +1,4 @@
+
 var grid = function() {
   var numCols = 3;
   var numRows = 3;
@@ -31,7 +32,7 @@ var grid = function() {
         } else {
           gridLayout[row] = [];
           for (var col = 0; col < numCols; col++) {
-            var cell = new Cell(col, row, emptyCell, level.getEmptyCellColor());
+            var cell = new Cell(col, row, emptyCell, level.getCellDim(), level.getEmptyCellColor());
             gridLayout[row][col] =  cell;
           }
         }

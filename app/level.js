@@ -22,9 +22,10 @@ var level = function() {
         [1],
         [0]
       ],
-      backgroundColor: '#ffffff',
-      emptyCellColor: '#000000',
-      filledCellColor: '#777777'
+      backgroundColor: '#000000',
+      emptyCellColor: '#ffffff',
+      filledCellColor: '#777777',
+      cellDim: 50
     }
   ];
   return {
@@ -36,6 +37,9 @@ var level = function() {
     },
     getFilledCellColor: function() {
       return levelData[curLevelNum].floorColor;
+    },
+    getCellDim: function() {
+      return levelData[curLevelNum].cellDim;
     },
     getLevelNum: function() {
       return curLevelNum;
