@@ -22,9 +22,9 @@ var level = function() {
         [1],
         [0]
       ],
-      backgroundColor: '#000000',
+      backgroundColor: '#ffffff',
       emptyCellColor: '#ffffff',
-      filledCellColor: '#777777',
+      filledCellColor: '#000000',
       cellDim: 50
     }
   ];
@@ -41,9 +41,18 @@ var level = function() {
     getCellDim: function() {
       return levelData[curLevelNum].cellDim;
     },
+    getNumRows: function() {
+      return levelData[curLevelNum].rowData.length;
+    },
+    getNumCols: function() {
+      return levelData[curLevelNum].colData.length;
+    },
     getLevelNum: function() {
       return curLevelNum;
     },
+    // getGraphics: function() {
+    //   return graphics;
+    // },
     startNewLevel: function() {
       grid.init();
       // map.digMap();

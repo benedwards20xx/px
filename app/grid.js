@@ -1,38 +1,71 @@
 
 var grid = function() {
-  var numCols = 3;
-  var numRows = 3;
+  // var numCols = 3;
+  // var numRows = 3;
 
   var gridLayout = [];
 
-  return {
-    getNumCols: function() {
-      return numCols;
-    },
-    getNumRows: function() {
-      return numRows;
-    },
-    canPlaceMarkerAtPos: function(col, row) {
+  // var graphics = game.add.graphics(0, 0);
 
-    },
+  return {
+    // getNumCols: function() {
+    //   return numCols;
+    // },
+    // getNumRows: function() {
+    //   return numRows;
+    // },
+    // canPlaceMarkerAtPos: function(col, row) {
+
+    // },
     getCellAtPos: function(col, row) {
       return gridLayout[row][col];
     },
+    // getGraphics: function() {
+    //   return graphics
+    // },
     init: function() {
       game.stage.backgroundColor = level.getBackgroundColor();
+
+      var levelCellDim = level.getCellDim();
+      var levelEmptyCellColor = level.getEmptyCellColor();
+
+      var graphics = game.add.graphics(0, 0);
+
+      graphics.lineStyle(4, level.getEmptyCellColor(), 1);
+      console.log(level.getNumRows() * levelCellDim);
+      console.log(level.getNumCols() * levelCellDim);
+      graphics.drawRoundedRect(
+        0,
+        0,
+        level.getNumRows() * levelCellDim,
+        level.getNumCols() * levelCellDim,
+        5
+      );
+
+      var numRows = level.getNumRows();
+      var numCols = level.getNumCols();
+
       if(level.getLevelNum() == 0)
         gridLayout = [];
       for (var row = 0; row < numRows; row++) {
         if (typeof gridLayout[row] != 'undefined' || gridLayout[row] != null) {
           for (var col = 0; col < numCols; col++) {
             if (typeof gridLayout[row][col] != 'undefined' || gridLayout[row][col] != null) {
-              gridLayout[row][col].updateCell(emptyCell, level.getEmptyCellColor());
+              gridLayout[row][col].updateCell(emptyCell, levelEmptyCellColor);
             }
           }
         } else {
           gridLayout[row] = [];
           for (var col = 0; col < numCols; col++) {
-            var cell = new Cell(col, row, emptyCell, level.getCellDim(), level.getEmptyCellColor());
+            // console.log("level cell dim: " + level.getCellDim());
+            // console.log("level empty cell color: " + level.getEmptyCellColor());
+
+            var cell = new Cell(
+                col,
+                row,
+                levelCellDim,
+                levelEmptyCellColor
+            );
             gridLayout[row][col] =  cell;
           }
         }

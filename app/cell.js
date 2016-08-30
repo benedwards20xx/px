@@ -18,9 +18,10 @@ function Cell(col, row, cellDim, color) {
   this.col = col;
   this.row = row;
 
-  var graphics = game.add.graphics(0, 0);
-
   console.log("creating cell: " + (col + 1) + ", " + (row + 1));
+  console.log("with color: " + color);
+
+  var graphics = game.add.graphics(0, 0);
 
   graphics.lineStyle(2, this.color, 1);
   this.box = graphics.drawRoundedRect(
@@ -31,7 +32,14 @@ function Cell(col, row, cellDim, color) {
     5
   );
 
-  // this.inputEnabled = true;
+  // var cell = px.create(
+  //   this.col * this.cellDim,
+  //   this.row * this.cellDim,
+  //   this.col + this.row * 3
+  // );
+  // cell.inputEnabled = true;
+  // cell.input.start(0, true);
+  // cell.events.onInputDown.add(this.clickCell);
 
   // game.input.addMoveCallback(this.clickBox, this);
 
@@ -57,6 +65,11 @@ function Cell(col, row, cellDim, color) {
   // this.clickBox = function(mouse) {
   //   console.log(mouse.event);
   // }
+
+  this.clickCell = function(cell, pointer) {
+    console.log("cell: " + cell);
+    console.log("pointer: " + pointer);
+  };
 
   this.updateCell = function(color) {
     // this.symbol = symbol;
