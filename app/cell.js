@@ -32,11 +32,11 @@ function Cell(col, row, cellDim, color) {
     5
   );
 
-  // var cell = px.create(
-  //   this.col * this.cellDim,
-  //   this.row * this.cellDim,
-  //   this.col + this.row * 3
-  // );
+  var cell = px.create(
+    this.col * this.cellDim,
+    this.row * this.cellDim,
+    this.col + this.row * 3
+  );
   // cell.inputEnabled = true;
   // cell.input.start(0, true);
   // cell.events.onInputDown.add(this.clickCell);
